@@ -1,9 +1,29 @@
 sources:
-- name: demo_src
-  tables:
-  - name: aircrafts
+  - name: demo_src
+    tables:
+      - name: aircrafts
+        description: "aircrafts"
 
-  - name: airports
+      - name: airports
+        description: "all airports"
 
-  - name: seats
-  
+      - name: seats
+        description: "seats"
+
+      - name: bookings
+        description: "bookings"
+
+        columns:
+           - name: book_date
+           - name: total_amount
+           - name: book_ref
+  freshness: # changed to config in v1.9
+        warn_after:
+          count:  6
+          period: hour 
+        error_after:
+          count:  1
+          period: day
+        filter: current_timestamp::date=book_date::date<3
+      loaded_at_field: book_date::timestamp
+      
