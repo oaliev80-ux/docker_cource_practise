@@ -13,7 +13,7 @@ sources:
 
         freshness:
           warn_after:
-            count: 60
+            count: 70
             period: hour
           error_after:
             count: 100000
