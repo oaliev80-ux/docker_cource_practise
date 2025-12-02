@@ -2,28 +2,25 @@ sources:
   - name: demo_src
     tables:
       - name: aircrafts
-        description: "aircrafts"
 
       - name: airports
-        description: "all airports"
 
       - name: seats
-        description: "seats"
 
       - name: bookings
-        description: "bookings"
+        description: "all bookings"
+        loaded_at_field: book_date::timestamp
 
+        freshness:
+          warn_after:
+            count: 60
+            period: hour
+          error_after:
+            count: 100000
+            period: day
+          filter: "current_date - book_date::date < 30000"
+    
         columns:
-           - name: book_date
-           - name: total_amount
-           - name: book_ref
-  freshness: # changed to config in v1.9
-        warn_after:
-          count:  6
-          period: hour 
-        error_after:
-          count:  1
-          period: day
-        filter: current_timestamp::date=book_date::date<3
-      loaded_at_field: book_date::timestamp
-      
+          - name: book_ref
+          - name: book_date
+          - name: total_amount
